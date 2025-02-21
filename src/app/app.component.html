@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="login-box">
+    <h1>Bienvenue</h1>
+    <p>Nous somme heureux de vous revoir</p>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <label for="email">Email*</label>
+      <input type="email" name="email" id="email" placeholder="Entrez votre email" ngModel required>
+
+      <div *ngIf="loginForm.submitted && loginForm.controls['email'].invalid">
+        <p style="color: red;">l'email est requis</p>
+      </div>
+
+      <label for="password">Mot de passe</label>
+      <div class="pwd-container">
+        <input type="password" name="password" id="password" placeholder="Entrer votre mot de passe" ngModel required>
+      </div>
+      <div *ngIf="loginForm.submitted && loginForm.controls['password'].invalid">
+        <p style="color: red;">le mot de passe est requis</p>
+      </div>
+      
+      <a href="#" class="forgot-pwd"> Mot de passe oublie?</a>
+      <button class="btn" type="submit">Connexion</button>
+
+      <p class="signup-text">Je n'ai pas de compte, je veux <a href="#">m'inscrire</a></p>
+
+      @if (isSubmitted && !isAuthenticated) {
+        <p style="color: red;">Identifiant ou mot de passe incorrecte.</p>
+      }
+      
+
+    </form>
+    @if (isAuthenticated || isSubmitted) {
+      <h5>Utilisateurs connectes</h5>
+      <table>
+        <thead>
+          <tr>
+            <th>Prenom: </th>
+            <th>Email: </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of showTable">
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+    }
+  </div>
+</div>
+
+
+
+<router-outlet />
